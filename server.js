@@ -8,7 +8,6 @@ const app = express();
 app.use(cors());
 dotEnv.config();
 DatabaseConnection();
-global.partial = "partial";
 
 app.get("/", async (req, res) => {
   res.status(200).send({ message: "Hey! Welcome to Hotel Management System." });

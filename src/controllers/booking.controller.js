@@ -3,17 +3,22 @@ const booking_obj = new booking();
 const { BookingQueries } = require("../database/index");
 const Booking = new BookingQueries();
 
-exports.get_bookings = async (req, res, next) => {
+exports.get_bookings = async (req, res) => {
   try {
-    const response = await booking_obj.find_bookings({ data: {} });
-    res.status(200).json(response);
+    // const response = await booking_obj.find_bookings({ data: {} });
+    let response = await pool.query(
+      `SELECT b.*, rt.type as room_type FROM booking b
+      JOIN room r ON b.room_id = r.id
+      JOIN "room-type" rt ON r.room_type_id = rt.id`
+    );
+    res.status(200).json({ isValid: true, data: response.rows });
   } catch (err) {
     console.log(err);
     res.status(400).json({ error: err });
   }
 };
 
-exports.create_booking = async (req, res, next) => {
+exports.create_booking = async (req, res) => {
   try {
     const { room_id, user_email, start_time, end_time, amount } = req.body;
     let response = await pool.query(
