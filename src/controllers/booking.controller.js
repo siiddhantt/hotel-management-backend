@@ -58,11 +58,11 @@ exports.update_booking = async (req, res) => {
     else {
       response = await await pool.query(
         `UPDATE booking
-        SET start_time = $1, end_time = $2, user_email = $3, amount = $4
-        WHERE id = $5;`,
-        [start_time, end_time, user_email, amount, id]
+        SET room_id = $1, start_time = $2, end_time = $3, user_email = $4, amount = $5
+        WHERE id = $6;`,
+        [room_id, start_time, end_time, user_email, amount, id]
       );
-      res.status(200).json(response);
+      res.status(200).json({ isValid: true, data: response });
     }
   } catch (err) {
     console.log(err);
