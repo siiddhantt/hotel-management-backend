@@ -10,8 +10,7 @@ exports.get_bookings = async (req, res) => {
     );
     res.status(200).json({ isValid: true, data: response.rows });
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err });
+    res.status(400).json({ isValid: false, data: err });
   }
 };
 
@@ -38,8 +37,7 @@ exports.create_booking = async (req, res) => {
       res.status(200).json(response);
     }
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err });
+    res.status(400).json({ isValid: false, data: err });
   }
 };
 
@@ -65,8 +63,7 @@ exports.update_booking = async (req, res) => {
       res.status(200).json({ isValid: true, data: response });
     }
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err });
+    res.status(400).json({ isValid: false, data: err });
   }
 };
 
@@ -78,9 +75,8 @@ exports.delete_booking = async (req, res) => {
       WHERE id = $1`,
       [id]
     );
-    res.status(200).json(response.rows);
+    res.status(200).json({ isValid: true, data: response.rows });
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err });
+    res.status(400).json({ isValid: false, data: err });
   }
 };
