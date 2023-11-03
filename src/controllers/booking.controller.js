@@ -1,11 +1,8 @@
-const booking = require("../services/booking.service");
-const booking_obj = new booking();
 const { BookingQueries } = require("../database/index");
 const Booking = new BookingQueries();
 
 exports.get_bookings = async (req, res) => {
   try {
-    // const response = await booking_obj.find_bookings({ data: {} });
     let response = await pool.query(
       `SELECT b.*, rt.type as room_type FROM booking b
       JOIN room r ON b.room_id = r.id
